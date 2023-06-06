@@ -63,9 +63,20 @@ def validate_domain(ctx, param, value):
 )
 def gll(**kwargs):
     logger = logging.getLogger(__name__)
-    logging.basicConfig(level=logging.INFO)
     if kwargs.get("verbose"):
         logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
+        # Override stack trace prints if we're not verbose
+        def on_crash(exctype, value, traceback):
+            logger.error("Oops. Something went wrong.")
+
+        sys.excepthook = on_crash
+
+    # Yoink the argument we no longer need
+    kwargs.pop("verbose")
+
     logger.debug("Received from Click: %s", kwargs)
 
     # GITLAB_PRIVATE_TOKEN isn't an official convention I don't think, perhaps remove it?
@@ -94,9 +105,6 @@ def gll(**kwargs):
             "Set domain from environment to %s", os.environ.get("CI_SERVER_HOST")
         )
         kwargs["domain"] = os.environ.get("CI_SERVER_HOST")
-
-    # Yoink an argument we no longer need
-    kwargs.pop("verbose")
 
     # Destructure the dictionary to pass it in
     # I would like to convert get_validation_data to be decoupled from the arguments too, eventually
