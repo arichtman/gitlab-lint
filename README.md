@@ -84,6 +84,11 @@ In general, PRs are welcome. We follow the typical trunk based development Git w
 This project supports Poetry for Python virtual environments.
 Poetry may be installed via `pip`, and environments can be accessed with `poetry shell` or `poetry run`.
 
+At the current time there's a bit of a clash with Flakes and Poetry2Nix.
+`editablePackageSources` property is at odds with the pureness of flakes.
+One can work around this by `direnv reload` on every change to package source code, or by directly running `python gll.py`.
+[GitHub issue](https://github.com/nix-community/poetry2nix/issues/425)
+
 #### Tests
 
 Run tests in root directory with `pytest`
