@@ -1,4 +1,3 @@
-# Reference https://discourse.nixos.org/t/easy-install-pypi-python-packages-mach-nix-poetry2nix/23825/6
 {
   description = "GitLab-Lint";
   inputs = {

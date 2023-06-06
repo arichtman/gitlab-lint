@@ -1,24 +1,17 @@
-import pytest
-from gitlab_lint.gll import generate_exit_info
+from gitlab_lint.gll import resolve_exit_code
 
 
-def test_successful_validation():
+def test_resolve_exit_code_success():
     # results from default linting api
     data = {"status": "valid", "errors": [], "warnings": []}
-    with pytest.raises(SystemExit) as e:
-        generate_exit_info(data)
-    assert e.type == SystemExit
-    assert e.value.code == 0
+    assert resolve_exit_code(data) == 0
 
     # results from project-specific api
     data = {"valid": True, "errors": [], "warnings": []}
-    with pytest.raises(SystemExit) as e:
-        generate_exit_info(data)
-    assert e.type == SystemExit
-    assert e.value.code == 0
+    assert resolve_exit_code(data) == 0
 
 
-def test_error_validation():
+def test_resolve_exit_code_failure():
     # results from default linting api
     data = {
         "status": "invalid",
@@ -27,10 +20,7 @@ def test_error_validation():
         ],
         "warnings": [],
     }
-    with pytest.raises(SystemExit) as e:
-        generate_exit_info(data)
-    assert e.type == SystemExit
-    assert e.value.code == 1
+    assert resolve_exit_code(data) == 1
 
     # results from project-specific api
     data = {
@@ -40,7 +30,4 @@ def test_error_validation():
         ],
         "warnings": [],
     }
-    with pytest.raises(SystemExit) as e:
-        generate_exit_info(data)
-    assert e.type == SystemExit
-    assert e.value.code == 1
+    assert resolve_exit_code(data) == 1

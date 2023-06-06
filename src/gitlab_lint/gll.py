@@ -63,6 +63,7 @@ def validate_domain(ctx, param, value):
 )
 def gll(**kwargs):
     logger = logging.getLogger(__name__)
+    logging.basicConfig(level=logging.INFO)
     if kwargs.get("verbose"):
         logging.basicConfig(level=logging.DEBUG)
     logger.debug("Received from Click: %s", kwargs)
@@ -100,7 +101,7 @@ def gll(**kwargs):
     # Destructure the dictionary to pass it in
     # I would like to convert get_validation_data to be decoupled from the arguments too, eventually
     data = get_validation_data(**kwargs)
-    generate_exit_info(data)
+    terminate_program(resolve_exit_code(data))
 
 
 def get_validation_data(file, domain, project, token, insecure, reference):
@@ -145,7 +146,7 @@ def get_validation_data(file, domain, project, token, insecure, reference):
     return data
 
 
-def generate_exit_info(data):
+def resolve_exit_code(data):
     """
     Parses response data and generates exit message and code
     :param data: json gitlab API ci/lint response data
@@ -162,15 +163,18 @@ def generate_exit_info(data):
         valid = data["valid"]
 
     if not valid:
-        print("GitLab CI configuration is invalid")
+        logger.info("GitLab CI configuration is invalid")
         for e in data["errors"]:
             logger.error(e)
-        sys.exit(1)
+        return 1
     else:
-        print("GitLab CI configuration is valid")
-        sys.exit(0)
+        logger.info("GitLab CI configuration is valid")
+        return 0
 
 
-# Had to add the second one for Poetry's script feature to work
-if __name__ in ("__main__", "gitlab_lint.gll"):
+def terminate_program(return_code):
+    sys.exit(return_code)
+
+
+if __name__ in ("__main__"):
     gll()
