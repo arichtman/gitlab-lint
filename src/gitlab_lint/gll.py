@@ -5,6 +5,8 @@ import sys
 import os
 import logging
 
+from trogon import tui
+
 import click
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
@@ -23,6 +25,7 @@ def validate_domain(ctx, param, value):
     return value
 
 
+@tui()
 @click.command(context_settings={"auto_envvar_prefix": "GLL"})
 @click.version_option(__version__)
 # Ergonomically defaulting to GitLab.com is nice, but it can result in credential leakage
