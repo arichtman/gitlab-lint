@@ -31,10 +31,12 @@ requests = "^2.31.0"
 fqdn = "^1.5.1"
 
 [tool.poetry.group.dev.dependencies]
+poetry = "*"
 pytest = "^7.3.1"
 pre-commit = "^3.3.2"
 bandit = "^1.7.5"
-safety = "^2.3.5"
+# TODO: Re-add when it's not stuffed
+# safety = "^2.3.5"
 commitizen = "^2.42.1"
 
 [build-system]
@@ -47,3 +49,7 @@ version_files = [
     "pyproject.toml:version",
     "src/gitlab_lint/__init__.py:__version__"
 ]
+
+[tool.pymarkdown]
+plugins.line-length.line_length = 160
+plugins.line-length.code_block_line_length = 160

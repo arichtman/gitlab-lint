@@ -49,10 +49,10 @@ $ gll --file path/to/.gitlab-ci.yml --domain gitlab.mycompany.com --project 1234
 # GitLab CI configuration is valid
 ```
 
-Https verification is enabled by default, if you wish to disable it pass the `--verify | -v` flag:
+Https verification is enabled by default, if you wish to disable it pass the `--insecure | -i` flag:
 
 ```bash
-$ gll --verify
+$ gll --insecure
 # GitLab CI configuration is valid
 ```
 

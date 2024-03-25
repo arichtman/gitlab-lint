@@ -12,6 +12,7 @@ repos:
   - id: check-executables-have-shebangs
   - id: check-yaml
     args: [--allow-multiple-documents]
+    additional_dependencies: [ruamel_yaml]
 
 - repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
   rev: v2.9.0
@@ -35,13 +36,13 @@ repos:
   - id: python-bandit-vulnerability-check
     args: [-lll, --recursive, gitlab_lint]
 
-- repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-  rev: v1.3.1
-  hooks:
-  - id: python-safety-dependencies-check
+# Re-add when safety package is ok
+# - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+#   rev: v1.3.1
+#   hooks:
+  # - id: python-safety-dependencies-check
 
 - repo: https://github.com/jackdewinter/pymarkdown/
   rev: v0.9.9
   hooks:
   - id: pymarkdown
-    args: [--config, .pymarkdown.json, scan]
