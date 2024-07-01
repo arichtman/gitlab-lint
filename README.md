@@ -98,12 +98,17 @@ Run tests in root directory with `pytest`
 To use this with pre-commit.com, you can use something like
 
 ```yaml
--   repo: https://github.com/mick352/gitlab-lint
-    rev: pre-commit-hook
-    hooks:
-    -   id: gitlab-ci-check
-        pass_filenames: false
-        args: [-d, my.private.gitlab.com, -p, project_id, -t, private_token]
+- repo: https://github.com/arichtman/gitlab-lint
+  rev: 0.8.1
+  hooks:
+  - id: gitlab-ci-check
+    files: .test.gitlab-ci.yml
+    args:
+    - --domain
+    - gitlab.com
+    - --project
+    - '45744560'
+    - --file
 ```
 
 (or remove the `args` line for gitlab.com).
