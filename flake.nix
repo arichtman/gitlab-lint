@@ -23,7 +23,7 @@
         poetryEnv = pkgs.poetry2nix.mkPoetryEnv {
           projectDir = ./.;
           editablePackageSources = {
-            gitlab-lint = ./src;
+            gitlab-lint-srt = ./src;
             preferWheels = true;
           };
         };
@@ -32,6 +32,7 @@
           mkShell {
             nativeBuildInputs = [
               poetryEnv
+              poetry
             ];
             shellHook = ''
               pre-commit install --install-hooks

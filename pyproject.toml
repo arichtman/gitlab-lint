@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "gitlab-lint"
+name = "gitlab-lint-srt"
 version = "0.8.1"
 description = "This is a CLI application to quickly lint .gitlab-ci.yml files using the gitlab api"
 authors = ["Elijah Roberts <elijah@elijahjamesroberts.com>"]
